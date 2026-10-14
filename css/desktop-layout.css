@@ -1,0 +1,93 @@
+/* На смартфонах (< 768px) игнорируем инлайновые координаты окон для чистого Mobile First */
+@media (max-width: 767px) {
+  .win95-window {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+/* Начиная с 768px (планшеты, ноутбуки с масштабом 125-150% и ПК) — полноценный рабочий стол Windows 95 */
+@media (min-width: 768px) {
+  body {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .top-bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .desktop {
+    position: relative;
+    height: calc(100vh - 110px);
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .hero-centerpiece {
+    position: absolute;
+    top: 44%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+  }
+
+  .desktop-icons {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .desktop-icon {
+    position: absolute;
+    width: 112px;
+    pointer-events: auto;
+    top: var(--pos-y, 10%);
+    left: var(--pos-x, 10%);
+  }
+
+  .software-dock {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+  }
+
+  .windows-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 40;
+  }
+
+  .win95-window {
+    position: absolute;
+    pointer-events: auto;
+    margin-bottom: 0;
+  }
+
+  .win95-titlebar {
+    cursor: grab;
+  }
+
+  .win95-titlebar:active {
+    cursor: grabbing;
+  }
+
+  .win95-ctrl-btn {
+    width: 22px;
+    height: 20px;
+  }
+
+  .project-showcase__gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+}

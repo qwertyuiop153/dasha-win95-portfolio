@@ -1,0 +1,659 @@
+.win95-outset {
+  background: var(--win-gray);
+  box-shadow: var(--bevel-outset);
+}
+
+.win95-inset {
+  background: var(--win-paper);
+  box-shadow: var(--bevel-inset);
+}
+
+.win95-btn {
+  font-family: var(--font-ui);
+  font-size: 0.84rem;
+  background: var(--win-gray);
+  color: var(--win-black);
+  padding: 4px 10px;
+  box-shadow: var(--bevel-outset);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.win95-btn:active,
+.win95-btn.active {
+  box-shadow: var(--bevel-inset);
+  background: var(--win-gray-light);
+  transform: translate(1px, 1px);
+}
+
+.win95-btn--primary {
+  outline: 1.5px solid var(--win-black);
+  font-weight: 700;
+}
+
+/* Контейнер и состояния окон Windows 95 */
+.windows-layer {
+  position: relative;
+  z-index: 40;
+}
+
+.win95-window {
+  display: none;
+  flex-direction: column;
+  background: var(--win-gray);
+  box-shadow: var(--bevel-outset), 0 12px 32px rgba(0, 0, 0, 0.45);
+  padding: 3px;
+  width: 100%;
+  min-width: 290px;
+  min-height: 220px;
+  margin-bottom: 16px;
+  position: relative;
+  user-select: text;
+}
+
+/* Открытое окно */
+.win95-window.is-open {
+  display: flex;
+}
+
+/* Свернутое окно (остается в панели задач, но скрыто с рабочего стола) */
+.win95-window.is-minimized {
+  display: none !important;
+}
+
+/* Развернутое на весь экран окно */
+.win95-window.is-maximized {
+  position: fixed !important;
+  top: 42px !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 72px !important;
+  width: 100vw !important;
+  height: calc(100vh - 114px) !important;
+  max-width: none !important;
+  max-height: none !important;
+  z-index: 800 !important;
+}
+
+/* Шапка окна */
+.win95-titlebar {
+  background: var(--win-inactive-grad);
+  color: var(--win-white);
+  padding: 5px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.win95-window.is-focused .win95-titlebar {
+  background: var(--win-blue-grad);
+}
+
+.win95-titlebar__text {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.win95-titlebar__controls {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.win95-ctrl-btn {
+  width: 28px;
+  height: 24px;
+  background: var(--win-gray);
+  color: var(--win-black);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 700;
+  box-shadow: var(--bevel-outset);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.win95-ctrl-btn:active {
+  box-shadow: var(--bevel-inset);
+}
+
+/* Меню-бар окна */
+.win95-menubar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 8px;
+  font-size: 0.78rem;
+  border-bottom: 1px solid var(--win-dark-gray);
+  flex-shrink: 0;
+}
+
+.win95-menubar__hint {
+  margin-left: auto;
+  color: #444;
+  font-size: 0.72rem;
+}
+
+.win95-menubar-btn {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  padding: 2px 8px;
+  background: var(--win-gray);
+  box-shadow: var(--bevel-outset);
+}
+
+.win95-menubar-btn:active {
+  box-shadow: var(--bevel-inset);
+}
+
+/* Тело окна (растягивается при ресайзе) */
+.win95-content {
+  padding: 10px;
+  flex: 1;
+  overflow-y: auto;
+  background: var(--win-gray);
+}
+
+/* Статус-бар и ребристый уголок ресайза */
+.win95-statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 3px 22px 3px 8px;
+  font-size: 0.74rem;
+  background: var(--win-gray);
+  box-shadow: var(--bevel-inset);
+  margin-top: 3px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.win95-resize-grip {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 14px;
+  height: 14px;
+  background-image: linear-gradient(
+    135deg,
+    transparent 30%,
+    var(--win-dark-gray) 30%,
+    var(--win-dark-gray) 45%,
+    var(--win-white) 45%,
+    var(--win-white) 60%,
+    var(--win-dark-gray) 60%,
+    var(--win-dark-gray) 75%,
+    var(--win-white) 75%
+  );
+  pointer-events: none;
+}
+
+/* Невидимые интерактивные грани для растягивания окна мышью */
+.win95-resizer {
+  position: absolute;
+  z-index: 10;
+}
+
+.win95-resizer--r {
+  top: 0;
+  right: -3px;
+  width: 8px;
+  height: 100%;
+  cursor: ew-resize;
+}
+
+.win95-resizer--b {
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  cursor: ns-resize;
+}
+
+.win95-resizer--br {
+  right: -4px;
+  bottom: -4px;
+  width: 18px;
+  height: 18px;
+  cursor: nwse-resize;
+  z-index: 12;
+}
+
+/* Контентные блоки внутри окон */
+.resume-section,
+.project-meta-box,
+.contact-card,
+.notepad-paper {
+  background: var(--win-paper);
+  box-shadow: var(--bevel-inset);
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.resume-section h2,
+.resume-section h3,
+.notepad-paper h3 {
+  font-family: var(--font-ui);
+  color: var(--win-navy);
+  margin-bottom: 6px;
+  font-size: 1.05rem;
+  border-bottom: 1px solid var(--win-gray);
+  padding-bottom: 3px;
+}
+
+.skill-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.skill-pill {
+  background: var(--win-gray);
+  box-shadow: var(--bevel-outset);
+  padding: 3px 8px;
+  font-size: 0.78rem;
+}
+
+.project-showcase__gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.project-showcase__img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border: 2px solid var(--win-dark-gray);
+}
+
+/* Палитра цветов кейса */
+.palette-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.palette-swatch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 7px;
+  background: var(--win-gray);
+  box-shadow: var(--bevel-outset);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.palette-swatch__color {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--win-black);
+}
+
+.deliverables-list {
+  list-style: square;
+  padding-left: 18px;
+  margin-top: 6px;
+  font-size: 0.88rem;
+}
+
+/* Форма и Меню Пуск */
+.win95-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.win95-label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.win95-input,
+.win95-textarea {
+  padding: 6px 8px;
+  border: none;
+  font-size: 0.9rem;
+}
+
+.start-menu {
+  position: fixed;
+  bottom: 72px;
+  left: 6px;
+  width: 255px;
+  display: flex;
+  z-index: 1200;
+  padding: 3px;
+}
+
+.start-menu[hidden] {
+  display: none !important;
+}
+
+.start-menu__sidebar {
+  background: linear-gradient(180deg, var(--win-navy) 0%, #000040 100%);
+  color: var(--win-white);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  padding: 10px 6px;
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+}
+
+.start-menu__list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.start-menu__item {
+  width: 100%;
+  text-align: left;
+  padding: 9px 12px;
+  font-family: var(--font-ui);
+  font-size: 0.88rem;
+}
+
+.start-menu__item:hover {
+  background: var(--win-navy);
+  color: var(--win-white);
+}
+
+.start-menu__divider {
+  height: 2px;
+  background: var(--win-dark-gray);
+  margin: 4px 0;
+}
+
+/* Подвал сайта (Таскбар + Академический отчет) */
+.os-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.taskbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+}
+
+.taskbar__divider {
+  width: 2px;
+  height: 24px;
+  background: var(--win-dark-gray);
+}
+
+.taskbar__windows {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+}
+
+.taskbar-tab {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.taskbar-tab.is-minimized-tab {
+  opacity: 0.78;
+}
+
+.taskbar__tray {
+  padding: 4px 8px;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--win-gray);
+}
+
+.academic-credit-bar {
+  background: #1b1b1b;
+  color: #e2e2e2;
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.credit-link-btn {
+  color: #72c0ff;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   ЭКРАН ЗАГРУЗКИ BIOS (BOOT SCREEN) И ИКОНКА FIGMA
+   ========================================================================== */
+.boot-screen {
+  position: fixed;
+  inset: 0;
+  background: #000000;
+  color: #cccccc;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.35s ease;
+}
+
+.boot-screen.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.boot-screen[hidden] {
+  display: none !important;
+}
+
+.boot-power-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 5;
+}
+
+.boot-power-overlay[hidden] {
+  display: none !important;
+}
+
+.boot-power-box {
+  width: 100%;
+  max-width: 440px;
+  padding: 3px;
+  color: var(--win-black);
+}
+
+.boot-power-body {
+  padding: 16px;
+  text-align: center;
+}
+
+.boot-power-body p {
+  margin-bottom: 14px;
+  font-size: 0.95rem;
+}
+
+.boot-power-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.boot-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.bios-fallback {
+  width: 100%;
+  max-width: 920px;
+  height: 100%;
+  padding: 32px 24px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: #d4d4d4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bios-fallback[hidden] {
+  display: none !important;
+}
+
+.bios-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.bios-energy-star {
+  border: 2px solid #88b04b;
+  padding: 8px 14px;
+  color: #f3e528;
+  text-align: right;
+  font-weight: 700;
+}
+
+.bios-energy-star span {
+  display: block;
+  font-size: 1.35rem;
+  color: #7cc576;
+}
+
+.bios-energy-star small {
+  font-size: 0.65rem;
+  color: #f3e528;
+}
+
+.bios-log {
+  flex: 1;
+  margin-top: 24px;
+  white-space: pre-wrap;
+}
+
+.bios-bottom {
+  border-top: 1px solid #444;
+  padding-top: 10px;
+  font-size: 0.9rem;
+}
+
+.boot-skip-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+/* Векторная иконка Figma */
+.figma-svg {
+  width: 20px;
+  height: 20px;
+}
+
+.tray-sound-btn {
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* Дополнительная сетка слайдов внутри кейса + Лайтбокс */
+.project-slides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.project-slide-thumb {
+  width: 100%;
+  height: 135px;
+  object-fit: cover;
+  border: 2px solid var(--win-dark-gray);
+  cursor: zoom-in;
+  background: #fff;
+}
+
+.project-slide-thumb:hover {
+  border-color: var(--win-navy);
+}
+
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.image-lightbox[hidden] {
+  display: none !important;
+}
+
+.image-lightbox__win {
+  max-width: 92vw;
+  max-height: 90vh;
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+}
+
+.image-lightbox__body {
+  padding: 6px;
+  overflow: auto;
+  background: #1a1a1a;
+}
+
+.image-lightbox__body img {
+  max-width: 86vw;
+  max-height: 78vh;
+  object-fit: contain;
+}

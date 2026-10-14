@@ -1,0 +1,271 @@
+/* ==========================================================================
+   БАЗОВЫЙ СЛОЙ (MOBILE FIRST: 320px+) И ОБОИ WINDOWS 95
+   ========================================================================== */
+
+body {
+  font-family: var(--font-body);
+  color: var(--win-text);
+  background-color: #008080; /* Каноничный Windows 95 Teal */
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 88px;
+  user-select: none;
+}
+
+/* Режим 1: Классический бирюзовый Windows 95 */
+body.theme-teal {
+  background-color: #008080;
+  background-image: none;
+}
+
+/* Режим 2: Классический пиксельный паттерн Windows 95 Plus! */
+body.theme-pattern {
+  background-color: #008080;
+  background-image: 
+    radial-gradient(#005959 1.5px, transparent 1.5px),
+    radial-gradient(#00a3a3 1.5px, #008080 1.5px);
+  background-size: 16px 16px;
+  background-position: 0 0, 8px 8px;
+}
+
+/* Режим 3: Облака Retro'98 из второго референса */
+body.theme-clouds {
+  background-color: #5b9bd5;
+  background-image: 
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 32%),
+    radial-gradient(circle at 82% 28%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 38%),
+    radial-gradient(circle at 50% 78%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 42%),
+    linear-gradient(180deg, #4a8ac4 0%, #9bc4ea 55%, #d6e8f8 100%);
+  background-attachment: fixed;
+}
+
+/* Верхняя панель */
+.top-bar {
+  background: var(--win-gray);
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  z-index: 500;
+}
+
+.top-bar__brand {
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background: #00b800;
+  border: 1px solid var(--win-black);
+  display: inline-block;
+}
+
+.top-bar__filters,
+.top-bar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Рабочая область */
+.desktop {
+  flex: 1;
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+}
+
+/* Центральный виджет с портретом Даши */
+.hero-centerpiece {
+  display: flex;
+  justify-content: center;
+  z-index: 5;
+}
+
+.hero-portrait-frame {
+  width: 100%;
+  max-width: 320px;
+  padding: 4px;
+  background: var(--win-gray);
+}
+
+.hero-mini-titlebar {
+  background: var(--win-blue-grad);
+  color: var(--win-white);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  padding: 3px 6px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.hero-mini-res {
+  opacity: 0.85;
+  font-size: 0.7rem;
+}
+
+.hero-img-box {
+  padding: 3px;
+  background: #2b3a42;
+}
+
+.hero-portrait-img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+}
+
+.hero-badge {
+  padding: 8px 6px 4px;
+  text-align: center;
+}
+
+.hero-badge h1 {
+  font-family: var(--font-ui);
+  font-size: 1.35rem;
+  line-height: 1.1;
+  margin-bottom: 2px;
+}
+
+.hero-badge p {
+  font-size: 0.8rem;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+.hero-quick-btns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Сетка ярлыков проектов (Mobile First — 2 колонки) */
+.desktop-icons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  z-index: 10;
+}
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 6px;
+  border: 1px dotted transparent;
+  cursor: pointer;
+}
+
+.desktop-icon:hover,
+.desktop-icon:focus-visible,
+.desktop-icon.is-selected {
+  outline: none;
+  border-color: var(--win-white);
+  background: rgba(0, 0, 128, 0.35);
+}
+
+.desktop-icon__thumb-wrap {
+  width: 64px;
+  height: 64px;
+  padding: 3px;
+  background: var(--win-gray);
+  box-shadow: var(--bevel-outset);
+  margin-bottom: 5px;
+  position: relative;
+  pointer-events: none;
+}
+
+.desktop-icon__thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.desktop-icon__tag {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  background: var(--win-navy);
+  color: var(--win-white);
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  padding: 1px 4px;
+  border: 1px solid var(--win-white);
+}
+
+.desktop-icon__label {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  line-height: 1.15;
+  color: var(--win-white);
+  background: rgba(0, 0, 0, 0.55);
+  padding: 2px 5px;
+  text-shadow: 1px 1px 0 var(--win-black);
+  pointer-events: none;
+}
+
+.desktop-icon:hover .desktop-icon__label,
+.desktop-icon.is-selected .desktop-icon__label {
+  background: var(--win-navy);
+}
+
+/* Док программ (Референс 1) */
+.software-dock {
+  background: var(--win-gray);
+  padding: 6px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto;
+  z-index: 25;
+}
+
+.dock-item {
+  transition: transform 0.12s ease;
+}
+
+.dock-item:hover {
+  transform: translateY(-3px);
+}
+
+.dock-icon {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border-radius: 5px;
+  color: #fff;
+  box-shadow: var(--bevel-outset);
+}
+
+.dock-icon--figma { background: #1e1e1e; color: #a259ff; }
+.dock-icon--ps    { background: #001e36; color: #31a8ff; }
+.dock-icon--ai    { background: #330000; color: #ff9a00; }
+.dock-icon--lr    { background: #001d26; color: #31a8ff; }
+.dock-icon--ae    { background: #00005b; color: #9999ff; }
+.dock-icon--id    { background: #49021f; color: #ff3366; }
+.dock-icon--doc,
+.dock-icon--ai-rep { background: var(--win-gray); color: var(--win-black); }
+
+.dock-divider {
+  width: 2px;
+  height: 26px;
+  background: var(--win-dark-gray);
+}

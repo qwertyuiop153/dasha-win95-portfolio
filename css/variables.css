@@ -1,0 +1,31 @@
+:root {
+  /* Классическая палитра Windows 95 */
+  --win-gray: #c0c0c0;
+  --win-gray-light: #dfdfdf;
+  --win-white: #ffffff;
+  --win-dark-gray: #808080;
+  --win-black: #000000;
+  
+  /* Системные фоны и акценты */
+  --win-teal: #008080;
+  --win-navy: #000080;
+  --win-blue-grad: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+  --win-inactive-grad: linear-gradient(90deg, #7f7f7f 0%, #b5b5b5 100%);
+  --win-paper: #ffffff;
+  --win-text: #111111;
+
+  /* 3D-рамки (Бевелы Windows 95) */
+  --bevel-outset: 
+    inset 1.5px 1.5px 0px var(--win-white),
+    inset -1.5px -1.5px 0px var(--win-dark-gray),
+    1.5px 1.5px 0px var(--win-black);
+    
+  --bevel-inset: 
+    inset 1.5px 1.5px 0px var(--win-dark-gray),
+    inset -1.5px -1.5px 0px var(--win-white),
+    inset 2.5px 2.5px 0px var(--win-black);
+
+  /* Типографика */
+  --font-ui: 'Pixelify Sans', 'Tahoma', sans-serif;
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}

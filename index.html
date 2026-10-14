@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dasha OS '95 — Портфолио графического дизайнера и иллюстратора</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Pixelify+Sans:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/win95-components.css">
+  <link rel="stylesheet" href="./css/desktop-layout.css">
+</head>
+<body class="theme-teal">
+
+  <!-- ЭКРАН ЗАГРУЗКИ BIOS (Видео ./assets/video/boot.mp4 + встроенный BIOS-фоллбэк) -->
+  <div class="boot-screen" id="boot-screen" role="dialog" aria-label="Загрузка системы BIOS">
+    <!-- Экран включения питания (нужен для разблокировки звука в браузере) -->
+    <div class="boot-power-overlay" id="boot-power-overlay">
+      <div class="boot-power-box win95-outset">
+        <div class="win95-titlebar" style="background: var(--win-blue-grad);">
+          <span class="win95-titlebar__text">🔌 Включение питания ПК (Pentium-S 75MHz)</span>
+        </div>
+        <div class="boot-power-body">
+          <p>Готовы запустить <strong>Microsoft® Dasha_OS 95</strong> со звуком и загрузкой BIOS?</p>
+          <div class="boot-power-actions">
+            <button type="button" class="win95-btn win95-btn--primary" id="btn-power-on">
+              ⏻ Включить компьютер (со звуком)
+            </button>
+            <button type="button" class="win95-btn" id="btn-skip-immediately">
+              ⏩ Сразу на рабочий стол
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Локальное видео загрузки (положите скачанный ролик как ./assets/video/boot.mp4) -->
+    <video class="boot-video" id="boot-video" preload="auto" playsinline>
+      <source src="./assets/video/boot.mp4" type="video/mp4">
+      <source src="./assets/video/boot.webm" type="video/webm">
+    </video>
+
+    <!-- Резервная текстовая анимация Award BIOS (показывается автоматически, пока нет файла boot.mp4) -->
+    <div class="bios-fallback" id="bios-fallback" hidden>
+      <div class="bios-top">
+        <div class="bios-award">
+          <p>Award Modular BIOS v4.51PG, An Energy Star Ally</p>
+          <p>Copyright (C) 1984-97, Award Software, Inc.</p>
+          <br>
+          <p>(55XWUQ0E) Intel i430VX PCIset(TM)</p>
+          <br>
+          <p>PENTIUM-S CPU at 75MHz</p>
+          <p>Memory Test : <span id="bios-mem-counter">0</span>K OK</p>
+        </div>
+        <div class="bios-energy-star">
+          <span>★ Energy</span>
+          <small>EPA POLLUTION PREVENTER</small>
+        </div>
+      </div>
+      <div class="bios-log" id="bios-log"></div>
+      <div class="bios-bottom">
+        Press <strong>DEL</strong> to enter SETUP, <strong>ESC</strong> to skip memory test<br>
+        12/18/97-i430VX-UMC8669-2A59GH2BC-00
+      </div>
+    </div>
+
+    <button type="button" class="boot-skip-btn win95-btn" id="btn-skip-boot">
+      [ ESC ] Пропустить загрузку ⏩
+    </button>
+  </div>
+
+  <!-- ВЕРХНЯЯ СИСТЕМНАЯ ПАНЕЛЬ И ФИЛЬТРЫ -->
+  <header class="top-bar win95-outset" aria-label="Системная панель навигации">
+    <div class="top-bar__brand">
+      <span class="status-dot" aria-hidden="true"></span>
+      <strong>Microsoft® Dasha_OS 95</strong>
+    </div>
+    <nav class="top-bar__filters" id="category-filters" aria-label="Фильтр проектов">
+      <button type="button" class="win95-btn active" data-filter="all">Все файлы (14)</button>
+      <button type="button" class="win95-btn" data-filter="branding">Брендинг &amp; Web</button>
+      <button type="button" class="win95-btn" data-filter="print">Полиграфия &amp; Афиши</button>
+      <button type="button" class="win95-btn" data-filter="smm">SMM &amp; Контент</button>
+      <button type="button" class="win95-btn" data-filter="art">2D-Игры &amp; Арт</button>
+    </nav>
+    <div class="top-bar__actions">
+      <button type="button" class="win95-btn" id="btn-reset-icons" title="Вернуть ярлыки на места">
+        🔄 Сбросить сетку
+      </button>
+      <button type="button" class="win95-btn" id="btn-toggle-bg" title="Сменить обои рабочего стола">
+        🎨 Обои: Win95 Teal
+      </button>
+    </div>
+  </header>
+
+  <!-- РАБОЧИЙ СТОЛ WINDOWS 95 -->
+  <main class="desktop" id="desktop-area">
+    
+    <!-- ЦЕНТРАЛЬНЫЙ ПОРТРЕТ ДАШИ -->
+    <section class="hero-centerpiece" aria-label="О дизайнере">
+      <div class="hero-portrait-frame win95-outset">
+        <div class="hero-mini-titlebar">
+          <span>🖼 PORTRAIT_DASHA.BMP</span>
+          <span class="hero-mini-res">640x480 • 256 цветов</span>
+        </div>
+        <div class="hero-img-box win95-inset">
+          <img 
+            src="./assets/img/dasha-hero.jpg" 
+            alt="Даша — графический дизайнер, фотограф и иллюстратор" 
+            class="hero-portrait-img"
+            onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 260 260%22><rect width=%22260%22 height=%22260%22 fill=%22%237ba2b8%22/><circle cx=%22130%22 cy=%22100%22 r=%2245%22 fill=%22%231e293b%22/><path d=%22M55 260 C55 175 205 175 205 260 Z%22 fill=%22%230f172a%22/><text x=%2250%25%22 y=%2232%22 text-anchor=%22middle%22 fill=%22%23fff%22 font-family=%22monospace%22 font-size=%2213%22>ПОЛОЖИТЕ ФОТО В assets/img/dasha-hero.jpg</text></svg>'"
+          >
+        </div>
+        <div class="hero-badge">
+          <h1>Даша</h1>
+          <p>Графический дизайнер • Фотограф • Иллюстратор</p>
+          <div class="hero-quick-btns">
+            <button type="button" class="win95-btn win95-btn--primary" data-open-window="win-resume">
+              💻 Обо_мне_и_Резюме.exe
+            </button>
+            <button type="button" class="win95-btn" data-open-window="win-contacts">
+              ✉️ Контакты.eml
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕТКА ЯРЛЫКОВ ПРОЕКТОВ -->
+    <section class="desktop-icons" id="desktop-icons-container" aria-label="Ярлыки проектов портфолио"></section>
+
+    <!-- НИЖНИЙ ДОК ИНСТРУМЕНТОВ С ДЕЙСТВУЮЩЕЙ ИКОНКОЙ FIGMA -->
+    <aside class="software-dock win95-outset" aria-label="Панель графических пакетов">
+      <button type="button" class="dock-item" data-filter-tool="Figma" title="Показать проекты в Figma">
+        <span class="dock-icon dock-icon--figma" aria-label="Figma">
+          <svg class="figma-svg" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 28.5C19 23.2533 23.2533 19 28.5 19C33.7467 19 38 23.2533 38 28.5C38 33.7467 33.7467 38 28.5 38C23.2533 38 19 33.7467 19 28.5Z" fill="#1ABCFE"/>
+            <path d="M0 47.5C0 42.2533 4.25329 38 9.5 38H19V47.5C19 52.7467 14.7467 57 9.5 57C4.25329 57 0 52.7467 0 47.5Z" fill="#0ACF83"/>
+            <path d="M19 0V19H28.5C33.7467 19 38 14.7467 38 9.5C38 4.25329 33.7467 0 28.5 0H19Z" fill="#FF7262"/>
+            <path d="M0 9.5C0 14.7467 4.25329 19 9.5 19H19V0H9.5C4.25329 0 0 4.25329 0 9.5Z" fill="#F24E1E"/>
+            <path d="M0 28.5C0 33.7467 4.25329 38 9.5 38H19V19H9.5C4.25329 19 0 23.2533 0 28.5Z" fill="#A259FF"/>
+          </svg>
+        </span>
+      </button>
+      <button type="button" class="dock-item" data-filter-tool="Photoshop" title="Показать проекты в Adobe Photoshop">
+        <span class="dock-icon dock-icon--ps">Ps</span>
+      </button>
+      <button type="button" class="dock-item" data-filter-tool="Illustrator" title="Показать проекты в Adobe Illustrator">
+        <span class="dock-icon dock-icon--ai">Ai</span>
+      </button>
+      <button type="button" class="dock-item" data-filter-tool="Lightroom" title="Показать проекты в Adobe Lightroom">
+        <span class="dock-icon dock-icon--lr">Lr</span>
+      </button>
+      <button type="button" class="dock-item" data-filter-tool="After Effects" title="Показать проекты в After Effects">
+        <span class="dock-icon dock-icon--ae">Ae</span>
+      </button>
+      <button type="button" class="dock-item" data-filter-tool="InDesign" title="Показать проекты в Adobe InDesign">
+        <span class="dock-icon dock-icon--id">Id</span>
+      </button>
+      <div class="dock-divider"></div>
+      <button type="button" class="dock-item" data-open-window="win-resume" title="Открыть резюме">
+        <span class="dock-icon dock-icon--doc">📋</span>
+      </button>
+      <button type="button" class="dock-item" data-open-window="win-ai-report" title="Отчет по AI и JS (Требование ТЗ)">
+        <span class="dock-icon dock-icon--ai-rep">🤖</span>
+      </button>
+    </aside>
+
+    <!-- СЛОЙ ПЛАВАЮЩИХ ОКОН WINDOWS 95 -->
+    <div class="windows-layer" id="windows-layer">
+
+      <!-- ОКНО 1: РЕЗЮМЕ И ОБО МНЕ -->
+      <article class="win95-window is-open" id="win-resume" data-title="💻 Обо_мне_и_Резюме.exe" style="top: 30px; left: 25px; width: 560px; height: 470px;">
+        <header class="win95-titlebar">
+          <div class="win95-titlebar__text">💻 C:\DASHA\Обо_мне_и_Резюме.exe</div>
+          <div class="win95-titlebar__controls">
+            <button type="button" class="win95-ctrl-btn" data-action="minimize" title="Свернуть в панель задач">_</button>
+            <button type="button" class="win95-ctrl-btn" data-action="maximize" title="Развернуть на весь экран">□</button>
+            <button type="button" class="win95-ctrl-btn win95-ctrl-btn--close" data-action="close" title="Закрыть окно">✕</button>
+          </div>
+        </header>
+        <div class="win95-menubar">
+          <span><u>Ф</u>айл</span>
+          <span><u>Р</u>езюме</span>
+          <span><u>Н</u>авыки</span>
+          <span class="win95-menubar__hint">💡 Тяните за шапку или края окна</span>
+        </div>
+        <div class="win95-content" id="resume-window-body"></div>
+        <div class="win95-statusbar">
+          <span>Статус: Открыта к сотрудничеству</span>
+          <span>СПбГУПТД (2023–2027)</span>
+          <span class="win95-resize-grip" aria-hidden="true"></span>
+        </div>
+        <div class="win95-resizer win95-resizer--r"></div>
+        <div class="win95-resizer win95-resizer--b"></div>
+        <div class="win95-resizer win95-resizer--br"></div>
+      </article>
+
+      <!-- ОКНО 2: ПРОСМОТРЩИК КЕЙСОВ ПОРТФОЛИО -->
+      <article class="win95-window" id="win-project-viewer" data-title="🎨 Просмотр_кейса.exe" style="top: 50px; left: 360px; width: 650px; height: 520px;">
+        <header class="win95-titlebar">
+          <div class="win95-titlebar__text" id="project-modal-title">📁 Кейс портфолио</div>
+          <div class="win95-titlebar__controls">
+            <button type="button" class="win95-ctrl-btn" data-action="minimize" title="Свернуть">_</button>
+            <button type="button" class="win95-ctrl-btn" data-action="maximize" title="Развернуть">□</button>
+            <button type="button" class="win95-ctrl-btn win95-ctrl-btn--close" data-action="close" title="Закрыть">✕</button>
+          </div>
+        </header>
+        <div class="win95-menubar">
+          <button type="button" class="win95-menubar-btn" id="btn-prev-project">◀ Предыдущий кейс</button>
+          <button type="button" class="win95-menubar-btn" id="btn-next-project">Следующий кейс ▶</button>
+        </div>
+        <div class="win95-content" id="project-modal-body"></div>
+        <div class="win95-statusbar">
+          <span id="project-status-category">Категория: —</span>
+          <span id="project-status-tools">Инструменты: —</span>
+          <span class="win95-resize-grip" aria-hidden="true"></span>
+        </div>
+        <div class="win95-resizer win95-resizer--r"></div>
+        <div class="win95-resizer win95-resizer--b"></div>
+        <div class="win95-resizer win95-resizer--br"></div>
+      </article>
+
+      <!-- ОКНО 3: КОНТАКТЫ -->
+      <article class="win95-window" id="win-contacts" data-title="✉️ Контакты.eml" style="top: 90px; left: 260px; width: 480px; height: 430px;">
+        <header class="win95-titlebar">
+          <div class="win95-titlebar__text">✉️ Outlook Express 95 — Написать Даше</div>
+          <div class="win95-titlebar__controls">
+            <button type="button" class="win95-ctrl-btn" data-action="minimize" title="Свернуть">_</button>
+            <button type="button" class="win95-ctrl-btn" data-action="maximize" title="Развернуть">□</button>
+            <button type="button" class="win95-ctrl-btn win95-ctrl-btn--close" data-action="close" title="Закрыть">✕</button>
+          </div>
+        </header>
+        <div class="win95-content">
+          <div class="contact-card win95-inset">
+            <p><strong>📍 Локация:</strong> Санкт-Петербург</p>
+            <p><strong>📧 Почта:</strong> <a href="mailto:sushestvoizpodvala@yandex.ru">sushestvoizpodvala@yandex.ru</a></p>
+            <p><strong>✈️ Telegram:</strong> <a href="https://t.me/dimanitwit" target="_blank" rel="noopener noreferrer">@dimanitwit</a></p>
+          </div>
+          <form class="win95-form" id="contact-form">
+            <label class="win95-label">Ваше имя или студия:
+              <input type="text" class="win95-input win95-inset" name="name" required placeholder="Например: Арт-директор студии">
+            </label>
+            <label class="win95-label">Куда ответить (Telegram / Email):
+              <input type="text" class="win95-input win95-inset" name="contact" required placeholder="@username или email">
+            </label>
+            <label class="win95-label">Опишите задачу:
+              <textarea class="win95-textarea win95-inset" name="message" rows="3" required placeholder="Привет, Даша! Нужен брендинг..."></textarea>
+            </label>
+            <div class="win95-form__actions">
+              <button type="submit" class="win95-btn win95-btn--primary">📨 Отправить письмо</button>
+              <span class="form-status" id="form-feedback" aria-live="polite"></span>
+            </div>
+          </form>
+        </div>
+        <div class="win95-statusbar">
+          <span>Подключение: TCP/IP OK</span>
+          <span class="win95-resize-grip" aria-hidden="true"></span>
+        </div>
+        <div class="win95-resizer win95-resizer--r"></div>
+        <div class="win95-resizer win95-resizer--b"></div>
+        <div class="win95-resizer win95-resizer--br"></div>
+      </article>
+
+      <!-- ОКНО 4: ОТЧЕТ ПО AI И JS -->
+      <article class="win95-window" id="win-ai-report" data-title="📝 AI_и_JS_Отчет.txt" style="top: 75px; left: 190px; width: 540px; height: 440px;">
+        <header class="win95-titlebar">
+          <div class="win95-titlebar__text">📝 Блокнот — AI_и_JS_Отчет.txt</div>
+          <div class="win95-titlebar__controls">
+            <button type="button" class="win95-ctrl-btn" data-action="minimize" title="Свернуть">_</button>
+            <button type="button" class="win95-ctrl-btn" data-action="maximize" title="Развернуть">□</button>
+            <button type="button" class="win95-ctrl-btn win95-ctrl-btn--close" data-action="close" title="Закрыть">✕</button>
+          </div>
+        </header>
+        <div class="win95-content">
+          <div class="notepad-paper win95-inset">
+            <h3>1. Проверяемое использование AI-помощника</h3>
+            <p><strong>Инструмент:</strong> Google Gemini. <strong>Затраченное время:</strong> ~3 часа.</p>
+            <p><strong>Задача:</strong> Проектирование модульной архитектуры Windows 95 по принципу Mobile First, реализация оконного менеджера, звукового движка и оцифровка 12 проектов из PDF-портфолио.</p>
+            <p><strong>Существенный запрос:</strong> <em>«Реализуй модульный интерфейс рабочего стола Windows 95 с экраном загрузки BIOS, звуками запуска и открытия файлов, перетаскиванием и ресайзом окон, сворачиванием в таскбар и адаптацией Mobile First».</em></p>
+            <p><strong>Проверка и самостоятельные исправления студента:</strong></p>
+            <ul>
+              <li>Реализован экран нажатия кнопки питания <code>⏻ Power On</code> перед стартом видео BIOS, чтобы обойти блокировку Autoplay со звуком в современных браузерах.</li>
+              <li>Добавлены 3-сторонние ресайзеры окон, нарезка реальных макетов портфолио и векторная иконка Figma.</li>
+            </ul>
+            <hr>
+            <h3>2. Реализованный функционал на JavaScript</h3>
+            <ul>
+              <li><strong>Boot Screen &amp; Audio Engine:</strong> Видео-загрузка BIOS с фоллбэк-эмулятором, звук запуска Windows 95 и звуки открытия папок/окон (MP3 + Web Audio API синтезатор) с кнопкой Mute в трее.</li>
+              <li><strong>Window Manager + Drag &amp; Resize:</strong> Открытие, закрытие, сворачивание в панель задач, разворачивание во весь экран, перетаскивание и растягивание окон за края.</li>
+              <li><strong>Динамическая база и фильтрация:</strong> Фильтрация 12 кейсов по категориям и по клику на иконки софта в доке, лайтбокс галереи и копирование HEX-цветов палитры.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="win95-statusbar">
+          <span>UTF-8 • Документация проекта</span>
+          <span class="win95-resize-grip" aria-hidden="true"></span>
+        </div>
+        <div class="win95-resizer win95-resizer--r"></div>
+        <div class="win95-resizer win95-resizer--b"></div>
+        <div class="win95-resizer win95-resizer--br"></div>
+      </article>
+
+    </div>
+
+    <!-- МЕНЮ ПУСК -->
+    <nav class="start-menu win95-outset" id="start-menu" hidden aria-label="Меню Пуск">
+      <div class="start-menu__sidebar"><span>Windows<strong>95</strong></span></div>
+      <ul class="start-menu__list">
+        <li><button type="button" class="start-menu__item" data-open-window="win-resume">💻 Обо мне и Резюме</button></li>
+        <li><button type="button" class="start-menu__item" data-open-window="win-contacts">✉️ Написать Даше</button></li>
+        <li><button type="button" class="start-menu__item" data-open-window="win-ai-report">📝 Отчет по AI и JS</button></li>
+        <li class="start-menu__divider"></li>
+        <li><button type="button" class="start-menu__item" id="start-open-all-projects">📂 Показать все 12 кейсов</button></li>
+        <li><button type="button" class="start-menu__item" id="start-cascade-windows">🗗 Каскад всех окон</button></li>
+        <li class="start-menu__divider"></li>
+        <li><button type="button" class="start-menu__item" id="start-replay-boot">🔌 Перезагрузить ПК (BIOS)</button></li>
+      </ul>
+    </nav>
+  </main>
+
+  <!-- ЛАЙТБОКС ДЛЯ УВЕЛИЧЕНИЯ КАРТИНОК КЕЙСОВ ПО КЛИКУ -->
+  <div class="image-lightbox" id="image-lightbox" hidden>
+    <div class="image-lightbox__win win95-outset">
+      <div class="win95-titlebar" style="background: var(--win-blue-grad);">
+        <span class="win95-titlebar__text" id="lightbox-caption">🔍 Просмотр макета</span>
+        <button type="button" class="win95-ctrl-btn" id="lightbox-close">✕</button>
+      </div>
+      <div class="image-lightbox__body win95-inset">
+        <img src="" alt="Увеличенный макет" id="lightbox-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- ПОДВАЛ САЙТА -->
+  <footer class="os-footer win95-outset">
+    <div class="taskbar">
+      <button type="button" class="win95-btn start-btn" id="start-btn" aria-expanded="false">
+        <span class="win-flag" aria-hidden="true">❖</span> <strong>Пуск</strong>
+      </button>
+      <div class="taskbar__divider"></div>
+      <div class="taskbar__windows" id="taskbar-tabs" aria-label="Открытые и свернутые окна"></div>
+      <div class="taskbar__tray win95-inset">
+        <button type="button" class="tray-sound-btn" id="btn-toggle-sound" title="Включить / Выключить звук">🔊</button>
+        <time class="tray-clock" id="tray-clock">12:00</time>
+      </div>
+    </div>
+
+    <div class="academic-credit-bar">
+      <span>
+        <strong>AI-помощник:</strong> Google Gemini (архитектура, верстка Win95, база кейсов; ~3 ч.) |
+      </span>
+      <span>
+        <strong>JS-функционал:</strong> Загрузка BIOS, звуковой движок Win95, оконный менеджер (свернуть/развернуть/Resize/Drag), фильтрация проектов и лайтбокс.
+      </span>
+      <button type="button" class="credit-link-btn" data-open-window="win-ai-report">[Открыть полный отчет AI &amp; JS]</button>
+    </div>
+  </footer>
+
+  <!-- Модульное подключение JS -->
+  <script defer src="./js/data/portfolioData.js"></script>
+  <script defer src="./js/modules/soundAndBoot.js"></script>
+  <script defer src="./js/modules/renderDesktop.js"></script>
+  <script defer src="./js/modules/windowManager.js"></script>
+  <script defer src="./js/modules/dragAndDrop.js"></script>
+  <script defer src="./js/modules/systemTray.js"></script>
+  <script defer src="./js/main.js"></script>
+</body>
+</html>
