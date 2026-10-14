@@ -172,26 +172,6 @@ window.DashaOS.projectsData = [
 
   // ================= КАТЕГОРИЯ: SMM & КОНТЕНТ (smm) =================
   {
-    id: "mediavalanteri",
-    title: "Сарафан_Карточки",
-    category: "smm",
-    categoryName: "Контент для соцсетей",
-    tools: "Figma",
-    posX: "4%",
-    posY: "44%",
-    thumb: "",
-    images: [],
-    inputData: "Логотип проекта «Медиаволонтеры» / «Сарафан», тексты и палитра.",
-    task: "Разработать образовательные карточки с четкой типографической иерархией для ленты соцсетей.",
-    result: "Созданы 4 серии карточек с повторяющимися графическими элементами (звезды, иконки, розовые акценты).",
-    deliverables: [
-      "Серия «Видеограф и Оператор: как отличать понятия»",
-      "Серия карточек по сторителлингу и редактуре (Стивен Кинг, Максим Ильяхов, Роберт Макки, Алексей Иванов)",
-      "Серия «Твой стиль» и подборка «Мобильная обработка — Must Have!»"
-    ],
-    palette: ["#FF85C0", "#FCE4F0", "#191919", "#FFFFFF"]
-  },
-  {
     id: "vk_content",
     title: "Контент_для_ВК",
     category: "smm",
@@ -224,8 +204,8 @@ window.DashaOS.projectsData = [
     category: "smm",
     categoryName: "Стикеры и Иллюстрация",
     tools: "Photoshop, Illustrator",
-    posX: "10%",
-    posY: "64%",
+    posX: "4%",
+    posY: "44%",
     thumb: "./assets/img/projects/stikers/Sticker Mockup (10) 1.jpg",
     images: [
       "./assets/img/projects/stikers/Sticker Mockup (10) 1.jpg",
